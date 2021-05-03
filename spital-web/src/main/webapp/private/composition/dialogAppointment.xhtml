@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:dialog header="#{appointmentsNamed.appointmentForm.id != null ? msg['dialogAppointment.edit.title'] 
+                        : msg['dialogAppointment.title']}" widgetVar="dlgAppointment" modal="true"
+              appendTo="@(body)" closeOnEscape="true" responsive="true">
+        <h:form id="form-add-appointment">
+            <p:panelGrid columns="2" styleClass="table-noborder">
+                <p:outputLabel value="#{msg['appointments.patient']}" for="patient"/>
+                <p:selectOneMenu id="patient" value="#{appointmentsNamed.appointmentForm.patientId}" required="true">
+                    <f:selectItem itemLabel="#{msg['action.select']}" itemValue=""/>
+                    <f:selectItems value="#{appointmentsNamed.patientses}" var="pat" 
+                                   itemLabel="#{pat.firstName} #{pat.lastName}" itemValue="#{pat.id}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="#{msg['appointments.typeConsultation']}" for="typeConsultation"/>
+                <p:selectOneMenu id="typeConsultation" value="#{appointmentsNamed.appointmentForm.typeConsultationId}" required="true">
+                    <f:selectItem itemLabel="#{msg['action.select']}" itemValue=""/>
+                    <f:selectItems value="#{appointmentsNamed.typeConsultations}" var="tc" 
+                                   itemLabel="#{tc.name}" itemValue="#{tc.id}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="#{msg['appointments.day']}" for="day"/>
+                <p:calendar id="day" value="#{appointmentsNamed.appointmentForm.day}" 
+                            pattern="dd.MM.yyyy" required="true" mindate="new Date();"/>
+                
+                <p:outputLabel value="#{msg['appointments.startDate']}" for="startDate"/>
+                <p:calendar id="startDate" value="#{appointmentsNamed.appointmentForm.startTime}" 
+                            pattern="HH:mm" required="true" binding="#{startDate}" timeOnly="true">
+                    <p:ajax event="dateSelect" update="endDate"/>
+                </p:calendar>
+
+                <p:outputLabel value="#{msg['appointments.endDate']}" for="endDate"/>
+                <p:calendar id="endDate" value="#{appointmentsNamed.appointmentForm.endTime}" 
+                            pattern="HH:mm" required="true" timeOnly="true" />
+
+                <p:outputLabel value="#{msg['appointments.description']}" for="description"/>
+                <p:inputTextarea id="description" value="#{appointmentsNamed.appointmentForm.description}" 
+                                 required="true" cols="15"/>
+
+                <p:commandButton value="#{msg['action.save']}" actionListener="#{appointmentsNamed.save()}" 
+                                 update="appoint-form,appoint-form:appoint-growl"/>
+
+                <p:commandButton value="#{msg['action.cancel']}" onclick="PF('dlgAppointment').hide();"/>
+
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+

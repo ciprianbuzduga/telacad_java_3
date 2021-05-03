@@ -1,0 +1,8 @@
+/target/classes
+/target/test-classes
+/target/spital-web-*
+/target/generated-sources
+/target/maven-status
+/target/endorsed
+/target/maven-archiver
+/faces-config.NavData

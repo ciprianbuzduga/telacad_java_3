@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../main.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="mainContent">
+        <h:form id="form-pacient">
+            <p:growl id="pacient-growl" showDetail="true"/>
+            <p:dataTable id="patientsTable" value="#{mapPatientsNamed.mapPatients}" var="patient">
+                <f:facet name="header">
+                    <h:outputText value="#{msg['patients.title']}"/>
+                </f:facet>
+                <p:column sortBy="#{patient.registerDate}" headerText="#{msg['patients.dateRegister']}">
+                    <h:outputText value="#{patient.registerDate}">
+                        <f:convertDateTime parent="dd.MM.yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{patient.idPatient}" sortFunction="#{mapPatientsNamed.sortByPatient}" 
+                          headerText="#{msg['patients.patient']}">
+                    <h:outputText value="#{patient.idPatient.firstName} #{patient.idPatient.lastName}"/>
+                </p:column>
+                <p:column sortBy="#{patient.idPatient.cnp}" headerText="#{msg['patients.cnp']}">
+                    <h:outputText value="#{patient.idPatient.cnp}"/>
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton actionListener="#{mapPatientsNamed.showPatientDlg()}" 
+                             value="#{msg['dialogPatient.title']}" oncomplete="PF('dlgPacient').show();"/>
+        </h:form>
+
+        <ui:include src="../../private/composition/dialogPatient.xhtml"/>
+    </ui:define>
+</ui:composition>
+

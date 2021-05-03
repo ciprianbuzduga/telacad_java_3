@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../main.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="mainContent">
+        <h:form id="program-form">
+            <p:growl id="program-growl" showDetail="true"/> 
+            <p:dataTable id="programJobTable" value="#{programNamed.programJobs}" var="pj">
+                <f:facet name="header">
+                    <h:outputText value="#{msg['program.title']}"/>
+                </f:facet>
+                <p:column sortBy="#{pj.day}" headerText="#{msg['program.day']}">
+                    <h:outputText value="#{pj.day}" >
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{pj.startTime}" headerText="#{msg['program.startDate']}">
+                    <h:outputText value="#{pj.startTime}">
+                        <f:convertDateTime pattern="HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{pj.endTime}" headerText="#{msg['program.endDate']}">
+                    <h:outputText value="#{pj.endTime}" >
+                        <f:convertDateTime pattern="HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{pj.user}" sortFunction="#{programNamed.sortByUser}" headerText="#{msg['program.doctor']}">
+                    <h:outputText value="#{pj.user.firstName} #{pj.user.lastName}"/>
+                </p:column>
+                <p:column sortBy="#{pj.jobDescription}" headerText="#{msg['program.description']}">
+                    <h:outputText value="#{pj.jobDescription}"/>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="#{msg['program.insert']}" onclick="PF('dlgProgram').show();"
+                             rendered="#{loginNamed.idRole == 2}"/>
+        </h:form>
+        <ui:include src="../../private/composition/dialogProgram.xhtml"/>
+    </ui:define>
+</ui:composition>
+

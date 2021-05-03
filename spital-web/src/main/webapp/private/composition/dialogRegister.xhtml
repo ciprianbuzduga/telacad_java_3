@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <p:dialog header="#{msg['action.register']}" widgetVar="dlgRegister" modal="true"
+              appendTo="@(body)" closeOnEscape="true" responsive="true" onShow="onShowDlgRegister();"
+              onHide="onHideDlgRegister();">
+        <h:form id="form-register">
+            <p:panelGrid columns="2" styleClass="table-noborder">
+                <p:outputLabel value="#{msg['login.firstname']}" for="firstname"/>
+                <p:inputText id="firstname" value="#{loginNamed.registerForm.firstname}" required="true"/>
+
+                <p:outputLabel value="#{msg['login.lastname']}" for="lastname"/>
+                <p:inputText id="lastname" value="#{loginNamed.registerForm.lastname}" required="true"/>
+                
+                <p:outputLabel value="#{msg['login.username']}" for="username"/>
+                <p:inputText id="username" value="#{loginNamed.registerForm.username}" required="true"/>
+                
+                <p:outputLabel value="#{msg['login.password']}" for="password"/>
+                <p:password id="password" value="#{loginNamed.registerForm.password}" required="true"/>
+
+                <p:outputLabel value="#{msg['login.cnp']}" for="cnp"/>
+                <p:inputText id="cnp" value="#{loginNamed.registerForm.cnp}" required="true" validator="stringToNumberValidator">
+                    <f:attribute name="min" value="13"/>
+                    <f:attribute name="max" value="13"/>
+                </p:inputText>
+
+                <p:outputLabel value="#{msg['login.medical.speciality']}" for="speciality"/>
+                <p:selectOneMenu id="speciality" value="#{loginNamed.registerForm.idSpeciality}" required="true">
+                    <f:selectItem itemLabel="#{msg['action.select']}" itemValue=""/>
+                    <f:selectItems value="#{loginNamed.medicalSpecialities}" var="spec" 
+                                   itemLabel="#{spec.name}" itemValue="#{spec.id}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="#{msg['login.registration.number']}" for="registration-number"/>
+                <p:inputText id="registration-number" value="#{loginNamed.registerForm.numarRegistru}" required="true" validator="stringToNumberValidator">
+                    <f:attribute name="min" value="5"/>
+                    <f:attribute name="max" value="11"/>
+                </p:inputText>
+
+                <p:outputLabel value="#{msg['login.telephon']}" for="telephon"/>
+                <p:inputText id="telephon" value="#{loginNamed.registerForm.telephon}" required="true"/>
+
+                <p:outputLabel value="#{msg['login.email']}" for="email"/>
+                <p:inputText id="email" value="#{loginNamed.registerForm.email}" required="true"/>
+
+                <p:commandButton value="#{msg['action.register']}" actionListener="#{loginNamed.register()}" 
+                                 update="login-form,login-form:login-growl"/>
+
+                <p:commandButton value="#{msg['action.cancel']}" onclick="PF('dlgRegister').hide();"/>
+                
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

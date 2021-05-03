@@ -1,0 +1,35 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 10, 2016, 5:44:02 PM
+    Author     : Buzy
+*/
+/*Pentru a pune no border pe panelGrid*/
+.table-noborder.ui-panelgrid>*>tr,
+.table-noborder.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+
+.panelgrid-align-center td,.panelgrid-align-center tr {
+    text-align: center;
+}
+
+.panelgrid-center {
+    margin: 0 auto;
+}
+
+.logout-link {
+    text-align: right;
+}
+
+.layout-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+

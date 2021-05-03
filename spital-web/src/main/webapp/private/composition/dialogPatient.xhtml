@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dialog header="#{msg['dialogPatient.title']}" widgetVar="dlgPacient" modal="true"
+              appendTo="@(body)" closeOnEscape="true" responsive="true">
+        <h:form id="form-dlg-pacient">
+            <h:inputHidden value="#{mapPatientsNamed.patientForm.id}"/>
+            <p:panelGrid columns="2" styleClass="table-noborder">
+                <p:outputLabel value="#{msg['dialogPatient.searchCnp']}" />
+                <p:autoComplete id="event" completeMethod="#{mapPatientsNamed.completeTextCnp}">
+                    <p:ajax event="itemSelect" listener="#{mapPatientsNamed.onItemCnpSelect}" 
+                            update="form-dlg-pacient,form-pacient:pacient-growl" />
+                </p:autoComplete>
+
+                <p:outputLabel value="#{msg['dialogPatient.firstname']}" for="firstname"/>
+                <p:inputText id="firstname" value="#{mapPatientsNamed.patientForm.firstName}" required="true"/>
+
+                <p:outputLabel value="#{msg['dialogPatient.lastname']}" for="lastname"/>
+                <p:inputText id="lastname" value="#{mapPatientsNamed.patientForm.lastName}" required="true"/>
+
+                <p:outputLabel value="#{msg['dialogPatient.cnp']}" for="cnp"/>
+                <p:inputText id="cnp" value="#{mapPatientsNamed.patientForm.cnp}" required="true"/>
+
+                <p:outputLabel value="#{msg['dialogPatient.insurrantCode']}" for="insurrantCode"/>
+                <p:inputText id="insurrantCode" value="#{mapPatientsNamed.patientForm.insurrantCode}" required="true"/>
+
+                <p:outputLabel value="#{msg['dialogPatient.telefon']}" />
+                <p:inputText id="telefon" value="#{mapPatientsNamed.patientForm.telefon}" />
+
+                <p:outputLabel value="#{msg['dialogPatient.email']}" />
+                <p:inputText id="email" value="#{mapPatientsNamed.patientForm.email}"/>
+
+                <p:commandButton value="#{msg['action.save']}" actionListener="#{mapPatientsNamed.savePatient()}" 
+                                 update="form-pacient,form-pacient:pacient-growl"/>
+
+                <p:commandButton value="#{msg['action.cancel']}" onclick="PF('dlgPacient').hide();"/>
+
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

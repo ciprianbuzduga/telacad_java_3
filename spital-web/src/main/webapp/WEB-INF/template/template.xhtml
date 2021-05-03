@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>#{msg['application.title']}</title>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="50">
+                <h:form id="north-form">
+                    <p:panelGrid columns="2" style="width: 100%" styleClass="table-noborder">
+                        <p:row><p:column>User: <h:outputText value="#{loginNamed.username}"/></p:column></p:row>
+                        <p:row><p:column style="text-align: right;"><p:commandLink id="logout-link" action="#{loginNamed.logout()}"
+                                                 value="#{msg['login.logout']}" rendered="#{loginNamed.loggedIn}"/></p:column></p:row>
+                    </p:panelGrid>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="50" styleClass="layout-center">
+                <h:outputText value="#{msg['application.developed']}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <h:form id="center-form"> 
+                    <p:ajaxStatus onstart="PF('status').show()" oncomplete="PF('status').hide()"/>
+                    <p:dialog widgetVar="status" modal="true" closable="false">
+                        <p:graphicImage library="images" name="loading.png"/>
+                    </p:dialog>
+                </h:form>
+                
+                <ui:insert name="centerContent"/>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+
